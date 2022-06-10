@@ -72,8 +72,8 @@
                     @item.Designation.Name
                 </td>
                 <td>
-                    <button type="button" class="btn btn-sm btn-primary d-inline"id="employee-table" @*data-reload="employee-table"*@ data-toggle="ajax-modal" data-url='@Url.Action("AddorEdit","Employee",new {id=item.EmployeeId })'>Update</button>
-                    <button type="button" class="btn btn-sm btn-danger" data-delete="delete"id="employee-table" @*data-reload="employee-table"*@ data-url="@Url.Action("Delete","Employee",new { id = item.EmployeeId })">Delete</button>
+                    <button type="button" class="btn btn-sm btn-primary d-inline" data-reload="employee-table" data-toggle="ajax-modal" data-url='@Url.Action("AddorEdit","Employee",new {id=item.EmployeeId })'>Update</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-delete="delete"id="employee-table" data-reload="employee-table" data-url="@Url.Action("Delete","Employee",new { id = item.EmployeeId })">Delete</button>
                 </td>
             </tr>
         }

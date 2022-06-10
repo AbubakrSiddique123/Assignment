@@ -67,7 +67,7 @@ $(function () {
                 $(".modal-backdrop").hide();
                 reloadtable(tableToReload);
                 
-              /*  window.location.reload();*/
+                window.location.reload();
             })
 
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -76,9 +76,10 @@ $(function () {
                     errMsg = XMLHttpRequest.responseText;
             });
        
+       
     });
+
    
-    
     $('body').on('click', 'button[data-delete="delete"]', function (event, tableToReload) {
        
         url = $(this).data('url');
