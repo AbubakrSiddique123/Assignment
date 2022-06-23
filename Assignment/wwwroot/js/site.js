@@ -1,31 +1,4 @@
-﻿//$.fn.datepicker.defaults.format = "mm/dd/yyyy";
-//$.fn.datepicker.defaults.autoclose = true;
-////$.fn.datepicker.defaults.
-
-
-//$('.datepicker,[data-provide="datepicker"]').datepicker().on('hide', function (e) {
-//    this.blur();
-//});
-
-
-//$('.datepicker').datepicker({
-//    todayBtn: "linked",
-//    todayHighlight: true,
-//    autoclose: true
-//});
-
-//var startDate = new Date();
-//startDate.setDate(startDate.getDate() - 1);
-
-//$('.day-before').datepicker({
-//    setDate: new Date(),
-//    endDate: startDate,
-//    todayBtn: "linked",
-//    todayHighlight: true,
-//    autoclose: true
-//});
-
-
+﻿
 $(function () {
     var placeholderElement = $('#modal-placeholder');
     $('#modal-placeholder').on('shown.bs.modal', function () {
@@ -34,12 +7,13 @@ $(function () {
         $(input).select();
     })
     $('body').on('click', 'button[data-toggle="ajax-modal"]', function (event) {
-
         var button = $(this);
+        toggleSpinner(button);
         url = $(this).data('url');
         $.get(url).done(function (data) {
             placeholderElement.html(data);
             placeholderElement.find('.modal').modal('show');
+            toggleSpinner(button, false);
         });
     });
 
@@ -47,6 +21,7 @@ $(function () {
     $('body').on('click', 'button[data-toggle="ajax-modal-post"]', function (event, data) {
         debugger
         var button = $(this);
+        toggleSpinner(button);
         event.preventDefault();
         form = $(this).parents('form');
         actionUrl = form.attr('action');
@@ -66,8 +41,8 @@ $(function () {
                 placeholderElement.html(data);
                 $(".modal-backdrop").hide();
                 reloadtable(tableToReload);
-                
-                window.location.reload();
+
+                /*  window.location.reload();*/
             })
 
             .fail(function (XMLHttpRequest, textStatus, errorThrown) {
@@ -75,16 +50,16 @@ $(function () {
                 if (XMLHttpRequest.responseText != '')
                     errMsg = XMLHttpRequest.responseText;
             });
-       
-       
+
     });
 
-   
+
     $('body').on('click', 'button[data-delete="delete"]', function (event, tableToReload) {
-       
+
         url = $(this).data('url');
         tableToReload = $(this).data('reload');
         var button = $(this);
+        toggleSpinner(button);
         Swal.fire({
             title: "Are you sure you want to delete this?",
             text: "You won't be able to return this!",
@@ -99,7 +74,7 @@ $(function () {
                     .done(function (data) {
                         reloadtable(tableToReload);
                         alert('your item is deleted');
-                    
+
                     })
                     .fail(function (XMLHttpRequest, textStatus, errorThrown) {
                         var errMsg = errorThrown;
@@ -110,5 +85,28 @@ $(function () {
         });
 
     });
-   
+    function toggleSpinner(button, enable = true) {
+        debugger
+        console.log('button was clicked');
+        if (button[0].localName == 'a') { //for anchor tag disable property will not work
+            $(button).click(function (e) {
+                e.preventDefault();
+            });
+        }
+        if (enable) { //enable spinner
+            button.append('<i class="fas fa-spinner fa-spin"></i>');
+            button.prop('disabled', true);
+        }
+        else {
+            button.removeAttr('disabled', 'disabled');
+            button.find('.fa-spinner').remove();
+        }
+    }
+    function reloadtable() {
+        $('#myTable').load('/Employee/index #myTable>', function () {
+            $('#myTable').DataTable().destroy();
+            $('#myTable').DataTable();
+        });
+    }
+
 });

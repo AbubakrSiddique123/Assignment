@@ -20,7 +20,8 @@ namespace Assignment.Models
         public int? DesignationID { get; set; }
 
         public int? DepartmentID { get; set; }
-
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime? JoiningDate { get; set; }
 
         public int? Salary { get; set; }

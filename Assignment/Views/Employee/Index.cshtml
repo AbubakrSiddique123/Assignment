@@ -4,103 +4,130 @@
 
     ViewData["Title"] = "Index";
 }
-
-<h1>Employee Table</h1>
-<div class="text-right mr-5 mb-2 ">
-
-    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddEmployee" data-url='@Url.Action("AddorEdit","Employee")'>
-        Add Employee
-    </button>
-    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddDesignation" data-url='@Url.Action("Add","Designation")'>
-        Add Designation
-    </button>
-    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddDescription" data-url='@Url.Action("Add","Department")'>
-        Add Department
-    </button>
-
+<style>
+    td, th {
+        text-align: center
+           
+    }
+    #mytable {
+        table-layout: fixed;
+        width: 98% !important;
+    }
+</style>
+<div class="content-header">
+    <div class="row mb-2">
+        <div class="col-sm-12">
+            <h1 style="text-align:center">EMPLOYEE TABLE</h1>
+        </div>
+    </div>
 </div>
-<table class="table ">
-    <thead>
-        <tr>
-            <th>
-                Name
-            </th>
-            <th>
-                FatherName
-            </th>
-            <th>
-                JoiningDate
-            </th>
-            <th>
-                Salary
-            </th>
-            <th>
-                IsActive
-            </th>
-            <th>
-                Department
-            </th>
-            <th>
-                Designation
-            </th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @item.Name
-                </td>
-                <td>
-                    @item.FatherName
-                </td>
-                <td>
-                    @item.JoiningDate
-                </td>
-                <td>
-                    @item.Salary
-                </td>
-                <td>
-                    @item.IsActive
-                </td>
-                <td>
-                    @item.Department.Name
-                </td>
-                <td>
-                    @item.Designation.Name
-                </td>
-                <td>
-                    <button type="button" class="btn btn-sm btn-primary d-inline" data-reload="employee-table" data-toggle="ajax-modal" data-url='@Url.Action("AddorEdit","Employee",new {id=item.EmployeeId })'>Update</button>
-                    <button type="button" class="btn btn-sm btn-danger" data-delete="delete"id="employee-table" data-reload="employee-table" data-url="@Url.Action("Delete","Employee",new { id = item.EmployeeId })">Delete</button>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@*<script>
+<div class="content">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                
+                <div class="text-right  mb-2 ">
+
+                    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddEmployee" data-url='@Url.Action("AddorEdit","Employee")'>
+                        Add Employee
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddDesignation" data-url='@Url.Action("Add","Designation")'>
+                        Add Designation
+                    </button>
+                    <button type="button" class="btn btn-info" data-toggle="ajax-modal" data-target="#AddDescription" data-url='@Url.Action("Add","Department")'>
+                        Add Department
+                    </button>
+
+                </div>
+                <table id="myTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                FatherName
+                            </th>
+                            <th>
+                                JoiningDate
+                            </th>
+                            <th>
+                                Salary
+                            </th>
+                            <th>
+                                IsActive
+                            </th>
+                            <th>
+                                Department
+                            </th>
+                            <th>
+                                Designation
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Name
+                                </td>
+                                <td>
+                                    @item.FatherName
+                                </td>
+                                <td>
+                                    @item.JoiningDate
+                                </td>
+                                <td>
+                                    @item.Salary
+                                </td>
+                                <td>
+                                    @item.IsActive
+                                </td>
+                                <td>
+                                    @item.Department.Name
+                                </td>
+                                <td>
+                                    @item.Designation.Name
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-sm btn-primary d-inline" id="employee-table" @*data-reload="employee-table"*@ data-toggle="ajax-modal" data-url='@Url.Action("AddorEdit","Employee",new {id=item.EmployeeId })'>Update</button>
+                                    <button type="button" class="btn btn-sm btn-danger" data-delete="delete" id="employee-table" @*data-reload="employee-table"*@ data-url="@Url.Action("Delete","Employee",new { id = item.EmployeeId })">Delete</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
     $('#employee-table').click(function () {
+        debugger
         location.reload();
     });
-</script>*@
+</script>
 
-@*<script>
-        function reloadtable(){
-            debugger
-            $('#employee-table').location.reload();
-        }
-    </script>*@
-
-@*<script type="text/javascript">
-        $(document).ready(function () {
-            debugger
-            $("button").click(function () {
-                location.reload(true);
-                alert('Reloading Page');
-            });
+<script>
+    $(document).ready(function () {
+        debugger
+        $('#myTable').DataTable({
+            scrollY: '200px',
+            scrollCollapse: true,
+            paging: false,
         });
-    </script>*@
+    });
+    function reloadtable() {
+        $('#myTable').load('/Employee/index #myTable>', function () {
+            debugger
+            $('#myTable').DataTable().destroy();
+            $('#myTable').DataTable();
+          
+        });
+    }
 
+</script>
 
 

@@ -1,0 +1,12 @@
+﻿<form method="post" enctype="multipart/form-data">
+	<input type="file" name="files" multiple />
+	<button type="submit">Upload</button>
+</form>
+
+<!-- To show the success message to the user  -->
+@if (ViewBag.Message != null)
+{
+	<div class="alert alert-success" style="margin-top:50px">
+		@ViewBag.Message
+	</div>
+}

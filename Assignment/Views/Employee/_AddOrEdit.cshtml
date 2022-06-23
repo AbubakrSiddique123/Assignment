@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label>Joining Date</label>
                             <div class='input-group date'>
-                                <input type="text" class="form-control datepicker" asp-for="JoiningDate" placeholder="Enter Date" />
+                                <input type="date" class="form-control datepicker" asp-for="JoiningDate" placeholder="Enter Date" />
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -52,3 +52,11 @@
     </div>
 </div>
 
+<script>
+    $(document).ready(function () {
+        debugger
+        $('#selector').datetimepicker({
+            format: 'YYYY-MM-DD'
+        });
+    });`
+</script>
